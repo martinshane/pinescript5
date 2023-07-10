@@ -27,13 +27,32 @@ This repository is a collection of Pine Script 5 resources, including example sc
 
 To use the resources in this repository, navigate to the appropriate directory and view the desired file. For example, to view an example script, navigate to the `example scripts/` directory and select the script you want to view.
 
-## Updates and Changelog
+## Concepts
 
-Updates and changes to this repository will be documented in this section.
+The `concepts` folder contains a variety of markdown files, each dedicated to explaining a specific concept in Pine Script. Here's a brief overview of each file:
 
-- **July 10, 2023**: Repository created.
+- `alerts.md`: Provides information about alerts in Pine Script.
+- `backgrounds.md`: Discusses how to use backgrounds in Pine Script.
+- `barcoloring.md`: Explains how to color bars in Pine Script.
+- `barplotting.md`: Covers the topic of bar plotting in Pine Script.
+- `barstates.md`: Provides information about bar states in Pine Script.
+- `chartinformation.md`: Discusses how to access and use chart information in Pine Script.
+- `colors.md`: Explains how to use colors in Pine Script.
+- `fills.md`: Provides information about fills in Pine Script.
+- `inputs.md`: Discusses how to use inputs in Pine Script.
+- `levels.md`: Explains how to use levels in Pine Script.
+- `libraries.md`: Provides information about libraries in Pine Script.
+- `linesandboxes.md`: Discusses how to use lines and boxes in Pine Script.
+- `nonstandardchartsdata.md`: Explains how to use non-standard charts data in Pine Script.
+- `plots.md`: Provides information about plots in Pine Script.
+- `repainting.md`: Discusses the concept of repainting in Pine Script.
+- `sessions.md`: Explains how to use sessions in Pine Script.
+- `strategies.md`: Provides information about strategies in Pine Script.
+- `tables.md`: Discusses how to use tables in Pine Script.
+- `textandshapes.md`: Explains how to use text and shapes in Pine Script.
+- `time.md`: Provides information about time in Pine Script.
+- `timeframes.md`: Discusses how to use timeframes in Pine Script.
 
-## Contact Information
+Each of these files will be a valuable resource for understanding and using Pine Script effectively.
 
-For any questions or concerns, please contact the repository owner.
 

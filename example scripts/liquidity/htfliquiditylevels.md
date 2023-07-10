@@ -1,0 +1,166 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © sbtnc
+// Created: 2022-04-26
+// Last modified: 2022-08-28
+// Version 2.0
+
+//@version=5
+indicator("HTF Liquidity Levels", "HTF Liquidity", overlay=true, max_lines_count=500)
+
+
+//--------------------------------------------------------------------
+//                             Constants
+//--------------------------------------------------------------------
+
+var START_OFFSET                = 0
+var END_OFFSET                  = 25
+
+
+//--------------------------------------------------------------------
+//                               Inputs
+//--------------------------------------------------------------------
+
+var g_htf                       = "HTF Liquidity"
+var g_intraday                  = "Intraday Liquidity"
+var g_purged                    = "Purged Liquidity"
+
+i_isDailyEnabled                = input         (true,                          "Daily",    inline="Daily",                 group=g_htf)
+i_dailyAboveLiquidityColor      = input         (color.new(color.green, 70),    "",         inline="Daily",                 group=g_htf)
+i_dailyBelowLiquidityColor      = input         (color.rgb(242, 54, 69, 70),    "",         inline="Daily",                 group=g_htf)
+i_dailyWidth                    = input         (2,                             "Width",    inline="Daily",                 group=g_htf)
+
+i_isWeeklyEnabled               = input         (true,                          "Weekly",   inline="Weekly",                group=g_htf)
+i_weelyAboveLiquidityColor      = input         (color.new(color.lime, 70),     "",         inline="Weekly",                group=g_htf)
+i_weelyBelowLiquidityColor      = input         (color.new(color.red, 70),      "",         inline="Weekly",                group=g_htf)
+i_weeklyWidth                   = input         (5,                             "Width",    inline="Weekly",                group=g_htf)
+
+i_isMonthlyEnabled              = input         (true,                          "Monthly",  inline="Monthly",               group=g_htf)
+i_monthlyAboveLiquidityColor    = input         (color.rgb(135, 254, 7, 90),    "",         inline="Monthly",               group=g_htf)
+i_monthlyBelowLiquidityColor    = input         (color.new(color.orange, 90),   "",         inline="Monthly",               group=g_htf)
+i_monthlyWidth                  = input         (10,                            "Width",    inline="Monthly",               group=g_htf)
+
+i_is1HEnabled                   = input         (false,                         "1H",       inline="1H",                    group=g_intraday)
+i_1HAboveLiquidityColor         = input         (color.rgb(0, 96, 100, 70),     "",         inline="1H",                    group=g_intraday)
+i_1HBelowLiquidityColor         = input         (color.rgb(74, 20, 140, 70),    "",         inline="1H",                    group=g_intraday)
+i_1HWidth                       = input         (1,                             "Width",    inline="1H",                    group=g_intraday)
+
+i_is4HEnabled                   = input         (false,                         "4H",       inline="4H",                    group=g_intraday)
+i_4HAboveLiquidityColor         = input         (color.rgb(0, 151, 167, 70),    "",         inline="4H",                    group=g_intraday)
+i_4HBelowLiquidityColor         = input         (color.rgb(123, 31, 162, 70),   "",         inline="4H",                    group=g_intraday)
+i_4HWidth                       = input         (1,                             "Width",    inline="4H",                    group=g_intraday)
+
+i_purgedLevelColor              = input         (color.new(color.gray, 70),     "Color",                                    group=g_purged)
+i_purgedLevelStyle              = input.string  ("Dashed",                      "Style",    ["Solid", "Dashed", "Dotted"],  group=g_purged)
+
+
+//--------------------------------------------------------------------
+//                        Variables declarations
+//--------------------------------------------------------------------
+
+var highsArray                  = array.new_float()
+var lowsArray                   = array.new_float()
+var highLinesArray              = array.new_line()
+var lowLinesArray               = array.new_line()
+var purgedLinesArray            = array.new_line()
+var float dayHigh               = na
+var float dayLow                = na
+
+[prevDayHigh, prevDayLow]       = request.security(syminfo.tickerid, "D",   [high[1], low[1]], lookahead=barmerge.lookahead_on)
+[prevWeekHigh, prevWeekLow]     = request.security(syminfo.tickerid, "W",   [high[1], low[1]], lookahead=barmerge.lookahead_on)
+[prevMonthHigh, prevMonthLow]   = request.security(syminfo.tickerid, "M",   [high[1], low[1]], lookahead=barmerge.lookahead_on)
+[prev4HHigh, prev4HLow]         = request.security(syminfo.tickerid, "240", [high[1], low[1]], lookahead=barmerge.lookahead_on)
+[prev1HHigh, prev1HLow]         = request.security(syminfo.tickerid, "60",  [high[1], low[1]], lookahead=barmerge.lookahead_on)
+
+
+//--------------------------------------------------------------------
+//                              Functions 
+//--------------------------------------------------------------------
+
+f_drawLine(float _y, color _c, int _w=1) => line.new(bar_index, _y, bar_index, _y, color=_c, width=_w)
+
+f_create(float _high, float _low, color _upperColor, color _lowerColor, int _linewidth) =>
+    array.push(highsArray, _high)
+    array.push(lowsArray, _low)
+    array.push(highLinesArray, f_drawLine(_high, _upperColor, _linewidth))
+    array.push(lowLinesArray, f_drawLine(_low, _lowerColor, _linewidth))
+
+f_updateStickyLevels(array<line> _levels) =>
+    for _line in _levels
+        line.set_x1(_line, bar_index + START_OFFSET)
+        line.set_x2(_line, bar_index + END_OFFSET)
+
+f_moveLevel(array<line> _from, array<line> _to, line _level, int _index) =>
+    array.push(_to, _level)
+    array.remove(_from, _index)
+
+f_highlightPurgedLevel(line _level) =>
+    _style = i_purgedLevelStyle == "Solid" ? line.style_solid : i_purgedLevelStyle == "Dashed" ? line.style_dashed : line.style_dotted
+    line.set_color(_level, i_purgedLevelColor)
+    line.set_style(_level, _style)
+
+f_updateUpperLevels(float _high, array<float> _highs, array<line> _levels, array<line> _purgedLevels) =>
+    while array.min(_highs) < _high
+        for [_index, _value] in _highs
+            if _high > _value
+                _line = array.get(_levels, _index)
+                f_highlightPurgedLevel(_line)
+                f_moveLevel(_levels, _purgedLevels, _line, _index)
+                array.remove(_highs, _index)
+
+f_updateLowerLevels(float _low, array<float> _lows, array<line> _levels, array<line> _purgedLevels) =>
+    while array.max(_lows) > _low
+        for [_index, _value] in _lows
+            if _low < _value
+                _line = array.get(_levels, _index)
+                f_highlightPurgedLevel(_line)
+                f_moveLevel(_levels, _purgedLevels, _line, _index) 
+                array.remove(_lows, _index)
+
+f_clearLevels(array<line> _levels) =>
+    while array.size(_levels) > 0
+        for [_index, _line] in _levels
+            line.delete(array.remove(_levels, _index))
+
+f_isHigherTimeframe(string _timeframe) => timeframe.in_seconds() <= timeframe.in_seconds(_timeframe)
+
+
+//--------------------------------------------------------------------
+//                                Logic
+//--------------------------------------------------------------------
+    
+// Create levels on historical bars
+
+if i_is1HEnabled and f_isHigherTimeframe("60") and ta.change(time("60"))
+    f_create(prev1HHigh, prev1HLow, i_1HAboveLiquidityColor, i_1HBelowLiquidityColor, i_1HWidth)
+
+if i_is4HEnabled and f_isHigherTimeframe("240") and ta.change(time("240"))
+    f_create(prev4HHigh, prev4HLow, i_4HAboveLiquidityColor, i_4HBelowLiquidityColor, i_4HWidth)
+
+if i_isDailyEnabled and f_isHigherTimeframe("D") and ta.change(time("D"))
+    f_create(prevDayHigh, prevDayLow, i_dailyAboveLiquidityColor, i_dailyBelowLiquidityColor, i_dailyWidth)
+
+if i_isWeeklyEnabled and f_isHigherTimeframe("W") and ta.change(time("W"))
+    f_create(prevWeekHigh, prevWeekLow, i_weelyAboveLiquidityColor, i_weelyBelowLiquidityColor, i_weeklyWidth)
+
+if i_isMonthlyEnabled and f_isHigherTimeframe("M") and ta.change(time("M"))
+    f_create(prevMonthHigh, prevMonthLow, i_monthlyAboveLiquidityColor, i_monthlyBelowLiquidityColor, i_monthlyWidth)
+
+
+// Update levels positions to "stick" at the right of the latest bar
+
+if barstate.islast
+    f_updateStickyLevels(highLinesArray)
+    f_updateStickyLevels(lowLinesArray)
+    f_updateStickyLevels(purgedLinesArray)
+
+
+// Set and highlight, immediately, levels that got their liquidity taken
+
+f_updateUpperLevels(high, highsArray, highLinesArray, purgedLinesArray)
+f_updateLowerLevels(low, lowsArray, lowLinesArray, purgedLinesArray)
+
+
+// Clean up, at the end of each day, levels that had their liquidity taken
+
+if ta.change(time("D"))
+    f_clearLevels(purgedLinesArray)

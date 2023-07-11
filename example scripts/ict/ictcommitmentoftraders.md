@@ -1,5 +1,30 @@
-// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
-// © toodegrees
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/Description:
+// The Commitment of Traders (COT) is a valuable raw data report released weekly by the Commodity Futures Trading Commission (CFTC). This report offers insights into the current long and short positions of three key market entities:
+// Commercial Traders (usually represented in red)
+// Large Traders (typically depicted in green)
+// Small Speculator Traders (commonly shown in blue)
+
+// The concept of utilizing the COT data as a strategic trading tool was first introduced by Larry Williams, who emphasized the importance of monitoring Commercial Speculators – large corporate producers or consumers of commodities.
+
+// The Inner Circle Trader (ICT) prompts us to delve deeper into this data. While we can easily determine their Net Position (also referred to as the Main Program) by subtracting Commercial Short Positions from the Commercial Long Positions, this calculation doesn't reveal their ongoing Hedge Program.
+
+// Merely following the Main Program won't provide a trading edge. Aligning with the Hedge Program can be an invaluable weapon in your trading arsenal.
+
+// The Commercial Speculators' Hedge Program can be unveiled by examining the highest and lowest reading of their Net Position over a chosen time period and setting a new "zero line" between these extremes. This process generates a novel "COT Graph" providing a detailed understanding of the Commercial Speculators' current market activity.
+
+// When the Hedge Program, Seasonality, and Open Interest are cross-referenced with Institutional Orderflow, a trader can construct a very clear medium-to-long-term market narrative.
+
+// Features:
+// Access COT Data for the Commercial Speculators via Tradingview's reliable data source
+// Automate calculations and display the 3-month, 6-month, 12-month, 2-year, and 3-year Hedge Program
+// Define your own Custom Time Range for the Hedge Program
+// Display the Main Program and all Hedge Programs in an easy-to-understand table format
+
+// Additionally, by following the included instructions, you can augment your table with COT data from multiple markets. This extra information can help monitor correlated markets and develop a more robust market narrative.
+
+
+
+
 import TradingView/LibraryCOT/2 as cot
 //@version=5
 indicator("ICT Commitment of Traders"

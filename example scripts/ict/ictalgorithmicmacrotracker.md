@@ -1,5 +1,27 @@
-// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
-// © toodegrees
+// Description:
+// The ICT Algorithmic Macro Tracker° Indicator is a powerful tool designed to enhance your trading experience by clearly and efficiently plotting the known ICT Macro Times on your chart.
+// Based on the teachings of the Inner Circle Trader, these Time windows correspond to periods when the Interbank Price Delivery Algorithm undergoes a series of checks (Macros) and is probable to move towards Liquidity.
+// The indicator allows traders to visualize and analyze these crucial moments in NY Time:
+// - 2:33-3:00
+// - 4:03-4:30
+// - 8:50-9:10
+// - 9:50-10:10
+// - 10:50-11:10
+// - 11:50-12:10
+// - 13:10-13:50
+// - 15:15-15:45
+// By providing a clean and clutter-free representation of ICT Macros, this indicator empowers traders to make more informed decisions, optimize and build their strategies based on Time.
+// Massive shoutout to @reastruth for his ICT Macros Indicator, and for allowing to create one of my own, go check him out!
+// Indicator Features:
+// – Track ongoing ICT Macros to aid your Live analysis.
+// - Gain valuable insights by hovering over the plotted ICT Macros to reveal tooltips with interval information.
+// – Plot the ICT Macros in one of two ways:
+// "On Chart": visualize ICT Macro timeframes directly on your chart, with automatic adjustments as Price moves.
+// Pro Tip: toggle Projections to see exactly where Macros begin and end without difficulty.
+// "New Pane": move the indicator two a New Pane to see both Live and Upcoming Macro events with ease in a dedicated section
+// Pro Tip: this section can be collapsed by double-clicking on the main chart, allowing for seamless trading preparation.
+
+
 //@version=5
 indicator( "ICT Algorithmic Macro Tracker° (Open-Source) by toodegrees"
 		 , shorttitle = "Macro Tracker°"

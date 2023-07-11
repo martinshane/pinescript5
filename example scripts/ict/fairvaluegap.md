@@ -1,8 +1,33 @@
-// This work is licensed under a Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) https://creativecommons.org/licenses/by-nc-sa/4.0/
-// © LuxAlgo
+// Fair Value Gaps (FVG) highlight imbalances areas between market participants and have become popular amongst technical analysts. The following script aims to display fair value gaps alongside the percentage of filled gaps and the average duration (in bar) before gaps are filled.
+// Users can be alerted when an FVG is filled using the alerts built-in this script.
+// Settings
+// Percentage: Threshold percentage used to detect impulse legs.
+// Auto Threshold: Use the cumulative mean of absolute relative price changes multiplied by 4 as threshold.
+// Show Last Unfilled Gaps: Number of recent bullish and bearish unfilled gaps to display. New unfilled gaps will discard older ones.
+// Show All Unfilled Gaps: Allows to display all unfilled gaps.
+// Timeframe: Timeframe of the price data used to detect FVG's
+// Usage
+// In practice, FVG's display areas of support (bullish FVG) and resistances (bearish FVG). Once a gap is filled, suggesting the end of the imbalance, we can expect the price to reverse.
+// This approach is more contrarian in nature, users wishing to use a more trend following approaching can use the identification of FVG as direct signals, going long with the identification of a bullish FVG, and short with a bearish FVG. No studies highlight the precision of such methods.
+// The gap height can be used to determine the degree of imbalance between buying and selling market participants.
+// Details
+// Various techniques exist for the identification of FVG's, we use the following rules on our script:
+// Bullish FVG
+// low > high(t-2)
+// close(t-1) > high(t-2)
+// %change > threshold
+// Upper Bullish FVG = low
+// Lower Bullish FVG = high(t-2)
+// Bearish FVG
+// high < low(t-2)
+// close(t-1) < low(t-2)
+// %change < -threshold
+// Upper Bearish FVG = low(t-2)
+// Lower Bearish FVG = high
+// where %change = (close(t-1) - open(t-1)) / open(t-1) * 100.
 
 //@version=5
-indicator("Fair Value Gap [LuxAlgo]", overlay = true, max_lines_count = 500)
+indicator("Fair Value Gap", overlay = true, max_lines_count = 500)
 //------------------------------------------------------------------------------
 //Settings
 //-----------------------------------------------------------------------------{

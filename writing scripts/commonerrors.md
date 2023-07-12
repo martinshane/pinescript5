@@ -13,4 +13,7 @@ Undeclared identifier 'timezone'
 The `transp` argument is deprecated. We recommend using color.new() or color.rgb() functions to specify the transparency of the plots instead. Additionally, note that `transp` has no effect in plots where the color is calculated at runtime
 Variable 'startTime' was declared with 'series int' type. Cannot assign it expression of type 'series bool'
 Undeclared identifier 'xloc'
+Cannot assign a variable to a tuple. The right side must be a function call or structure ('if', 'switch', 'for', 'while') returning a tuple with the same number of elements.
+Could not find function or function reference 'arrayfrom'
+Syntax error at input '['
 

@@ -9,7 +9,6 @@
 
 study(shorttitle="VE_X", title="VELA ELEFANTE DE OLIVER VELEZ", overlay=true)
 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ //
 // ENTRADA DE DATOS / CONFIGURACION
 // ------------------------------------------------------------------------------------------------------------------
 
@@ -39,8 +38,6 @@ CT=              input(title = "══════════════ CONFI
 config_tend_alc= input(defval="DIRECCION MEDIA RAPIDA ALCISTA", title="🔹 CONDICION TENDENCIA ALCISTA 🐘 =", options=["NINGUNA CONDICION","PRECIO MAYOR A MEDIA RAPIDA", "PRECIO MAYOR A MEDIA LENTA", "PRECIO MAYOR A MEDIA RAPIDA Y LENTA", "PRECIO MAYOR A MEDIA LENTA Y DIRECCION ALCISTA", "PRECIO MAYOR A MEDIA RAPIDA Y DIRECCION ALCISTA", "PRECIO MAYOR A MEDIA LENTA/RAPIDA Y DIRECCION ALCISTA", "DIRECCION MEDIA LENTA ALCISTA", "DIRECCION MEDIA RAPIDA ALCISTA", "DIRECCION MEDIA LENTA/RAPIDA ALCISTA"])
 config_tend_baj= input(defval="DIRECCION MEDIA RAPIDA BAJISTA", title="🔹 CONDICION TENDENCIA BAJISTA 🐘 =", options=["NINGUNA CONDICION","PRECIO MENOR A MEDIA RAPIDA", "PRECIO MENOR A MEDIA LENTA", "PRECIO MENOR A MEDIA RAPIDA Y LENTA", "PRECIO MENOR A MEDIA LENTA Y DIRECCION BAJISTA", "PRECIO MENOR A MEDIA RAPIDA Y DIRECCION BAJISTA", "PRECIO MENOR A MEDIA LENTA/RAPIDA Y DIRECCION BAJISTA", "DIRECCION MEDIA LENTA BAJISTA", "DIRECCION MEDIA RAPIDA BAJISTA", "DIRECCION MEDIA LENTA/RAPIDA BAJISTA"])
 
-//
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ //
 // VARIABLES / CONSTANTES
 // ------------------------------------------------------------------------------------------------------------------
 
@@ -50,10 +47,7 @@ rojo=#FF0000
 verde=#00FF13
 verde_fuerte=#0AAC00
 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ //
 // **************************************PROGRAMACION DE LAS REGLAS**************************************************
-//
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ //
 
 atr = atr(CDBA)
 
@@ -66,7 +60,6 @@ VRE_1 = VRE_0 and abs(open[0]-close[0]) *100/ abs(high[0]-low[0]) >= PDCM   ? tr
 VVE_2 = VVE_1 and abs(open[0]-close[0]) >= atr[1]*FDB   ? true : false
 VRE_2 = VRE_1 and abs(open[0]-close[0]) >= atr[1]*FDB   ? true : false 
 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ //
 // TENDENCIA
 // ------------------------------------------------------------------------------------------------------------------
 
@@ -152,7 +145,7 @@ NCB = config_tend_baj == "NINGUNA CONDICION" ? true : false
 VVE_3 = VVE_2 and PMAMR? true :VVE_2 and PMAML? true :VVE_2 and PMAMRYL? true :VVE_2 and PMAMLYDA? true :VVE_2 and PMAMRYDA? true :VVE_2 and PMAMLRYDA? true :VVE_2 and DMLA? true :VVE_2 and DMRA? true :VVE_2 and DMLRA? true :VVE_2 and NCA? true :false        
 VRE_3 = VRE_2 and PMEAMR? true :VRE_2 and PMEAML? true :VRE_2 and PMEAMRYL? true :VRE_2 and PMEAMLYDB? true :VRE_2 and PMEAMRYDB? true :VRE_2 and PMEAMLRYDB? true :VRE_2 and DMLB? true :VRE_2 and DMRB? true :VRE_2 and DMLRB? true :VRE_2 and NCB? true :false
 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ 
+
 // RESULTADO
 // ------------------------------------------------------------------------------------------------------------------
 
@@ -160,7 +153,7 @@ RES_VVE = VVE_3 and VVEV and  modo_tipo == "CON FILTRADO DE TENDENCIA"  ? true :
 RES_VRE = VRE_3 and VVER and  modo_tipo == "CON FILTRADO DE TENDENCIA"  ? true :VRE_2 and VVER and modo_tipo == "SIN FILTRADO DE TENDENCIA"  ? true : false 
 
 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
 // PLOTEADO
 // ------------------------------------------------------------------------------------------------------------------
 
@@ -171,7 +164,7 @@ barcolor(RES_VRE and PVE? rojo : na, offset=0)
 plotshape(RES_VVE and MEE, text='🐘', style=shape.arrowup, location=location.abovebar, color=verde_fuerte, textcolor=blanco, offset=0, transp=0)
 plotshape(RES_VRE and  MEE, text='🐘', style=shape.arrowdown, location=location.belowbar, color=rojo, textcolor=blanco, offset=0, transp=0)
 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ //
+
 // ALERTAS
 // ------------------------------------------------------------------------------------------------------------------
 

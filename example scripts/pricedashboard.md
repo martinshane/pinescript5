@@ -1,4 +1,4 @@
-//@version=5
+[//@version=5
 indicator("Price Dashboard", "Price Dashboard", overlay = true, max_lines_count = 500, max_boxes_count = 500, max_bars_back=5000)
 //------------------------------------------------------------------------------
 //Settings
@@ -903,3 +903,4 @@ custom3_cross := ta.cross(close, cust3level)
 custom4_cross := ta.cross(close, cust4level)
 custom5_cross := ta.cross(close, cust5level)
 custom6_cross := ta.cross(close, cust6level)
+](https://github.com/martinshane/pinescript5/blob/main/example%20scripts/pricedashboard.md)https://github.com/martinshane/pinescript5/blob/main/example%20scripts/pricedashboard.md

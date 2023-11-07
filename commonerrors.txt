@@ -1,0 +1,12 @@
+Error messages
+The if statement is too long
+Script requesting too many securities
+Script could not be translated from: null
+line 2: no viable alternative at character ‘$’
+Mismatched input <…> expecting <???>
+Loop is too long (> 500 ms)
+Script has too many local variables
+Pine Script™ cannot determine the referencing length of a series. Try using max_bars_back in the indicator or strategy function
+The if statement is too long
+This error occurs when the indented code inside an if statement is too large for the compiler. Because of how the compiler works, you won’t receive a message telling you exactly how many lines of code you are over the limit. The only solution now is to break up your if statement into smaller parts (functions or smaller if statements). The example below shows a reasonably lengthy if statement; theoretically, this would throw line 4: if statement is too long.
+

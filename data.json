@@ -1,13 +1,7 @@
 {
-  "symbols": [
-    {
-      "symbol": "MY_SYMBOL",
-      "name": "My Custom Symbol",
-      "description": "Description of my custom data",
-      "type": "stock",
-      "currency": "USD",
-      "exchange": "Custom Exchange",
-      "timezone": "Etc/UTC"
+  "symbols": {
+    "MY_SYMBOL": {
+      "file": "data/MY_SYMBOL.csv"
     }
-  ]
+  }
 }

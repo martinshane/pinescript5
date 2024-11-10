@@ -1,7 +1,0 @@
-{
-  "symbol": ["MY_SYMBOL"],
-  "description": ["My Custom Symbol"],
-  "pricescale": [100],
-  "currency": ["USD"],
-  "exchange": ["Custom Exchange"]
-}
